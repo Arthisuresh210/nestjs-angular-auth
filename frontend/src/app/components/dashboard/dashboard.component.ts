@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 interface User {
   id: number;
@@ -54,7 +54,7 @@ export class DashboardComponent implements OnInit {
     }
 
     this.http
-      .get<User>('http://localhost:3000/users/me', {
+      .get<User>(`${environment.apiUrl}/users/me`, {
         headers: new HttpHeaders({ Authorization: `Bearer ${token}` }),
       })
       .subscribe({
@@ -66,9 +66,9 @@ export class DashboardComponent implements OnInit {
           console.error('Error:', err);
           const stored = localStorage.getItem('user');
           if (stored) {
-            this.user = JSON.parse(stored);
-            // eslint-disable-next-line prettier/prettier
-          this.cdr.detectChanges();
+            // eslint-disable-next-line prettier/prettier, @typescript-eslint/no-unsafe-assignment
+          this.user = JSON.parse(stored);
+            this.cdr.detectChanges();
           }
         },
       });
