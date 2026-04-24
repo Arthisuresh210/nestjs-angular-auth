@@ -1,98 +1,208 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# ⚡ NestJS + Angular Auth App
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This is my hands-on project built to learn full-stack web development using NestJS for the backend and Angular for the frontend. The app allows users to register, login with email/password or Google account, and view their profile on a dashboard. All user data is stored in a MySQL database.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## 🌐 Live Demo
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+| | Link |
+|---|---|
+| 🖥️ Live Website | [Click here to open the app](https://arthisuresh210.github.io/nestjs-angular-auth/) |
+| ⚙️ Backend API | [https://nestjs-angular-auth.onrender.com](https://nestjs-angular-auth.onrender.com) |
+| 📁 GitHub Repo | [https://github.com/Arthisuresh210/nestjs-angular-auth](https://github.com/Arthisuresh210/nestjs-angular-auth) |
 
-## Project setup
+---
 
-```bash
-$ npm install
+## 🎯 What I Built
+
+I built a complete authentication system from scratch with the following features:
+
+- A **Register page** where new users can create an account with name, email and password
+- A **Login page** where existing users can sign in
+- A **Google OAuth login** button that lets users sign in using their Google account
+- A **Dashboard page** that shows the logged in user's profile, stats and account info
+- **Protected routes** — the dashboard cannot be accessed without logging in
+- **JWT tokens** — after login a token is generated and stored, used to verify the user on every request
+- **Password hashing** — passwords are never stored as plain text, they are hashed using bcrypt
+- **MySQL database** — all user details are saved in a cloud MySQL database
+
+---
+
+## 🛠️ Technologies Used
+
+### Frontend (Angular)
+- **Angular 17** with Standalone Components — for building the UI pages
+- **TypeScript** — for type-safe code
+- **SCSS** — for styling with a dark theme
+- **Angular Router** — for navigating between pages
+- **AuthGuard** — to protect the dashboard route from unauthenticated users
+- **HttpClient** — to make API calls to the backend
+
+### Backend (NestJS)
+- **NestJS** — Node.js framework used to build the REST API
+- **Passport.js** — handles the authentication strategies
+- **passport-local** — for email/password login
+- **passport-google-oauth20** — for Google OAuth login
+- **passport-jwt** — for verifying JWT tokens on protected routes
+- **JWT (JSON Web Token)** — for generating and verifying auth tokens
+- **bcrypt** — for hashing user passwords before saving to database
+
+### Database
+- **MySQL** — relational database to store user data
+- **TypeORM** — connects NestJS to MySQL and manages the users table
+
+### Hosting (All Free)
+- **GitHub Pages** — hosts the Angular frontend
+- **Render** — hosts the NestJS backend
+- **Clever Cloud** — hosts the MySQL database
+
+---
+
+## 🔒 How Authentication Works
+
+### Email & Password Login
+```
+1. User fills in email and password on login page
+2. Angular sends POST request to /auth/login
+3. NestJS validates credentials using passport-local
+4. Password is compared with bcrypt hashed password in DB
+5. If valid → JWT token is generated and returned
+6. Angular stores the token in localStorage
+7. Every API request sends the token as Authorization header
+8. Backend verifies token using passport-jwt strategy
+9. User data is returned and dashboard loads
 ```
 
-## Compile and run the project
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+### Google OAuth Login
+```
+1. User clicks "Continue with Google"
+2. Angular redirects to /auth/google on backend
+3. NestJS redirects to Google consent screen
+4. User approves → Google sends profile data to callback
+5. NestJS finds existing user or creates new one in MySQL
+6. JWT token is generated
+7. Backend redirects to Angular with token in URL
+8. Angular extracts token and stores in localStorage
+9. Dashboard loads with user profile
 ```
 
-## Run tests
+---
 
-```bash
-# unit tests
-$ npm run test
+## 📡 API Endpoints
 
-# e2e tests
-$ npm run test:e2e
+| Method | Endpoint | Description | Protected |
+|--------|----------|-------------|-----------|
+| POST | `/auth/register` | Create new account | ❌ |
+| POST | `/auth/login` | Login with email & password | ❌ |
+| GET | `/auth/google` | Start Google OAuth flow | ❌ |
+| GET | `/auth/google/callback` | Google OAuth callback | ❌ |
+| GET | `/users/me` | Get logged in user profile | ✅ JWT required |
 
-# test coverage
-$ npm run test:cov
+---
+
+## 🗄️ Database Table
+
+```sql
+CREATE TABLE users (
+  id          INT AUTO_INCREMENT PRIMARY KEY,
+  google_id   VARCHAR(255) UNIQUE,
+  email       VARCHAR(255) UNIQUE NOT NULL,
+  name        VARCHAR(255),
+  picture     VARCHAR(500),
+  password    VARCHAR(255),
+  created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 ```
 
-## Deployment
+---
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+## 🚀 How to Run Locally
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
+### Step 1 — Clone the repo
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+git clone https://github.com/Arthisuresh210/nestjs-angular-auth.git
+cd nestjs-angular-auth
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### Step 2 — Create MySQL database
+```sql
+CREATE DATABASE auth_app;
+```
 
-## Resources
+### Step 3 — Setup backend
+```bash
+cd backend
+npm install
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+Create a `.env` file inside the `backend` folder:
+```env
+DB_HOST=localhost
+DB_PORT=3306
+DB_USERNAME=root
+DB_PASSWORD=yourpassword
+DB_NAME=auth_app
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+GOOGLE_CALLBACK_URL=http://localhost:3000/auth/google/callback
+JWT_SECRET=supersecretjwtkey123
+FRONTEND_URL=http://localhost:4200
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Start the backend:
+```bash
+npm run start:dev
+```
+Runs on → **http://localhost:3000**
 
-## Support
+### Step 4 — Setup frontend
+```bash
+cd frontend
+npm install
+ng serve
+```
+Runs on → **http://localhost:4200**
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+---
 
-## Stay in touch
+## ☁️ How I Deployed for Free
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+| What | Where |
+|------|-------|
+| Angular Frontend | GitHub Pages |
+| NestJS Backend | Render |
+| MySQL Database | Clever Cloud |
 
-## License
+### Deploy frontend
+```bash
+cd frontend
+ng build --configuration production --base-href /nestjs-angular-auth/
+npx angular-cli-ghpages --dir=dist/frontend/browser
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### Deploy backend
+- Connected GitHub repo to Render
+- Set Root Directory to `backend`
+- Set Build Command to `npm install && npm run build`
+- Set Start Command to `node dist/main.js`
+- Added all `.env` variables in Render dashboard
+
+---
+
+## 👩‍💻 Developer
+
+**Arthi Suresh**
+- GitHub: [@Arthisuresh210](https://github.com/Arthisuresh210)
+
+---
+
+## 📄 Note
+
+This project was built as a hands-on learning exercise to understand:
+- How NestJS works with modules, controllers, services and guards
+- How Angular standalone components and routing work
+- How Google OAuth 2.0 flow works end to end
+- How JWT tokens are generated and verified
+- How to connect a Node.js app to MySQL using TypeORM
+- How to deploy a full-stack app for free
