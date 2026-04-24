@@ -9,7 +9,7 @@ This is my hands-on project built to learn full-stack web development using Nest
 | | Link |
 |---|---|
 | 🖥️ Live Website | [Click here to open the app](https://arthisuresh210.github.io/nestjs-angular-auth/) |
-| ⚙️ Backend API | [https://nestjs-angular-auth.onrender.com](https://nestjs-angular-auth.onrender.com) |
+| ⚙️ Backend API | [https://nestjs-angular-auth.onrender.com](https://nestjs-angular-auth.onrender.com/auth/google) |
 | 📁 GitHub Repo | [https://github.com/Arthisuresh210/nestjs-angular-auth](https://github.com/Arthisuresh210/nestjs-angular-auth) |
 
 ---
