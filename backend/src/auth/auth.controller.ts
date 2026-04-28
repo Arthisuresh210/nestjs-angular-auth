@@ -2,7 +2,6 @@ import { Controller, Get, UseGuards, Request, Res } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ConfigService } from '@nestjs/config';
 import { AuthService } from './auth.service';
-import { Response } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -17,7 +16,7 @@ export class AuthController {
 
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
-  async googleCallback(@Request() req, @Res() res: Response) {
+  async googleCallback(@Request() req, @Res() res: any) {
     const frontendUrl = this.config.get('FRONTEND_URL');
     try {
       const result = await this.authService.googleLogin(req.user);
